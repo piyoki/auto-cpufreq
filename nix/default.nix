@@ -1,9 +1,9 @@
-{
-  lib,
-  python3Packages,
-  pkgs,
-  fetchFromGitHub,
-  fetchPypi,
+{ lib
+, python3Packages
+, pkgs
+, fetchFromGitHub
+, fetchPypi
+,
 }:
 let
 
@@ -23,6 +23,7 @@ let
       rev = "923cebec3a2a84c7e38c9e68171eb93f5d07ce5d";
       hash = "sha256-714CximEK4YhIqDmvqJYOUGs39gvDkWGrkNrXwxT8iM=";
     };
+    patches = [ ];
   });
 
   requests = python3Packages.requests.overrideAttrs (oldAttrs: {
@@ -42,14 +43,14 @@ python3Packages.buildPythonPackage {
   version = "2.3.0";
   src = ../.;
 
-  nativeBuildInputs = with pkgs; [wrapGAppsHook gobject-introspection];
+  nativeBuildInputs = with pkgs; [ wrapGAppsHook gobject-introspection ];
 
-  buildInputs = with pkgs; [gtk3 python3Packages.poetry-core];
+  buildInputs = with pkgs; [ gtk3 python3Packages.poetry-core ];
 
-  propagatedBuildInputs = with python3Packages; [requests pygobject3 click distro psutil setuptools poetry-dynamic-versioning pyinotify pkgs.getent];
+  propagatedBuildInputs = with python3Packages; [ requests pygobject3 click distro psutil setuptools poetry-dynamic-versioning pyinotify pkgs.getent ];
 
   doCheck = false;
-  pythonImportsCheck = ["auto_cpufreq"];
+  pythonImportsCheck = [ "auto_cpufreq" ];
 
   patches = [
     # patch to prevent script copying and to disable install
@@ -92,7 +93,7 @@ python3Packages.buildPythonPackage {
     description = "Automatic CPU speed & power optimizer for Linux";
     license = lib.licenses.lgpl3Plus;
     platforms = lib.platforms.linux;
-    maintainers = with lib.maintainers; [Technical27];
+    maintainers = with lib.maintainers; [ Technical27 ];
     mainProgram = "auto-cpufreq";
   };
 }
